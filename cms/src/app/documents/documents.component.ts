@@ -1,4 +1,7 @@
 import { Component } from '@angular/core';
+import { DocumentService } from './document.service';
+import { Document } from './document.model';
+
 
 @Component({
   selector: 'app-documents',
@@ -10,5 +13,14 @@ import { Component } from '@angular/core';
 export class DocumentsComponent {
 
   selectedDocument: Document;
+
+  constructor(private documentService: DocumentService) {}  
+
+  ngOnInit() {
+    this.documentService.documentSelectedEvent.subscribe(
+      (document: Document) => {
+        this.selectedDocument = document; 
+    });
+  }''
 
 }
