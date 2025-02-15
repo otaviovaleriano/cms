@@ -5,7 +5,7 @@ import { ContactService } from '../contact.service';
 @Component({
   selector: 'app-contact-list',
   standalone: false,
-  
+
   templateUrl: './contact-list.component.html',
   styleUrl: './contact-list.component.css'
 })
@@ -17,11 +17,15 @@ export class ContactListComponent {
   }
 
   ngOnInit(): void {
+    this.contactService.contactChangedEvent.subscribe((contacts: Contact[]) => {
+      this.contacts = contacts;
+    });
+
     this.contacts = this.contactService.getContacts();
   }
 
   onSelected(contact: Contact) {
-    console.log(contact); 
+    console.log(contact);
     this.contactService.contactSelectedEvent.emit(contact);
   }
 

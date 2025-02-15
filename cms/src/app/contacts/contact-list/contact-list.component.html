@@ -4,7 +4,7 @@
             <div class="panel panel-default">
                 <div class="panel-heading clearfix">
                     <h1 class="panel-title pull-left">Contacts</h1>
-                    <button class="btn btn-success pull-right" style="margin-top: 3px;" >New Contact</button>
+                    <button class="btn btn-success pull-right" style="margin-top: 3px;" routerLink="new">New Contact</button>
                 </div>
                 <div class="panel-body">
                     <app-contact-item *ngFor="let contact of contacts" [contact]="contact" (selectedContactEvent)="onSelected(contact)"></app-contact-item>
