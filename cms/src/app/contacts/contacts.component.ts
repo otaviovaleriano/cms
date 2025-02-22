@@ -11,14 +11,11 @@ import { ContactService } from './contact.service';
 })
 export class ContactsComponent {
 
-  selectedContact: Contact;
   
-  constructor(private contactService: ContactService) { }
+  constructor() { }
 
   ngOnInit() {
-    this.contactService.contactSelectedEvent.subscribe((contact: Contact) => {
-      this.selectedContact = contact;
-    });
+
   }
 
 

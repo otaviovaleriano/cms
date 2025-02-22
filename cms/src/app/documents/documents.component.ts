@@ -12,15 +12,9 @@ import { Document } from './document.model';
 })
 export class DocumentsComponent {
 
-  selectedDocument: Document;
-
-  constructor(private documentService: DocumentService) {}  
+  constructor() {}  
 
   ngOnInit() {
-    this.documentService.documentSelectedEvent.subscribe(
-      (document: Document) => {
-        this.selectedDocument = document; 
-    });
-  }''
+  }
 
 }
