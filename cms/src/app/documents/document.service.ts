@@ -5,23 +5,23 @@ import { Subject } from 'rxjs';
 
 export class DocumentService {
 
+    documents: Document[] = [];
     maxDocumentId: number;
 
     documentListChangedEvent = new Subject<Document[]>();
-
-    // documentSelectedEvent = new EventEmitter<Document>();
-
-    documents: Document[] = [];
-
-    // documentChangedEvent = new EventEmitter<Document[]>();
 
     constructor() {
         this.maxDocumentId = this.getMaxId();
         this.documents = MOCKDOCUMENTS2;
     }
-    getDocuments(): Document[] {
+    // getDocuments(): Document[] {
+    //     return this.documents.slice();
+    // }
+
+    getDocuments() {
         return this.documents.slice();
-    }
+      }
+    
 
     getDocument(id: string): Document {
         for (const document of this.documents) {
@@ -30,6 +30,7 @@ export class DocumentService {
             }
         }
         return null;
+
     }
 
     deleteDocument(document: Document) {
@@ -60,9 +61,13 @@ export class DocumentService {
         if (!newDocument) {
             return;
         }
-        this.maxDocumentId++;
-        newDocument.id = this.maxDocumentId.toString();
+
+        // this.maxDocumentId++;
+        const nextId = (this.documents.length > 0) ? Math.max(...this.documents.map(doc => +doc.id)) + 1 : 1;
+        newDocument.id = nextId.toString();
+        
         this.documents.push(newDocument);
+
         const documentsListClone = this.documents.slice();
         this.documentListChangedEvent.next(documentsListClone);
 

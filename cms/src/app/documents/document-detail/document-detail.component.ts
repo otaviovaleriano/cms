@@ -14,24 +14,25 @@ import { WindRefService } from '../../wind-ref.service';
 })
 export class DocumentDetailComponent {
 
-  nativeWindow: any;
+nativeWindow: any;
   
 document: Document;
-id: string
 
     constructor(
       private documentService: DocumentService,
       private windowRefService: WindRefService,
       private router: Router,
       private route: ActivatedRoute)
-      {this.nativeWindow = windowRefService.getNativeWindow();}
+      {}
 
 
   ngOnInit() {
+    this.nativeWindow = this.windowRefService.getNativeWindow();
+
     this.route.params.subscribe(
       (params: Params) => {
-        this.id = params['id'];
-        this.document = this.documentService.getDocument(this.id);
+        const id = params['id'];
+        this.document = this.documentService.getDocument(id);
       }
     );
  } 
