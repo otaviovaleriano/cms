@@ -22,6 +22,7 @@ import { MessageService } from './message/message.service';
 import { AppRoutingModule } from './app-routing.module';
 import { DocumentEditComponent } from './documents/document-edit/document-edit.component';
 import { ContactEditComponent } from './contacts/contact-edit/contact-edit.component';
+import { DragDropModule } from '@angular/cdk/drag-drop';
 
 @NgModule({
   declarations: [
@@ -45,7 +46,8 @@ import { ContactEditComponent } from './contacts/contact-edit/contact-edit.compo
     BrowserModule,
     FormsModule,
     DropdownDirective,
-    AppRoutingModule
+    AppRoutingModule,
+    DragDropModule
   ],
   providers: [ContactService, DocumentService, MessageService],
   bootstrap: [AppComponent]
