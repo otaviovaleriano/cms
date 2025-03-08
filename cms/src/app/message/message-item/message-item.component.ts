@@ -14,7 +14,7 @@ export class MessageItemComponent {
   messageSender: string;
 
   @Input() message!: Message;
-  currentSender: string = 'Otavio Silva';
+  currentSender: string = '';
 
   constructor(private contactService: ContactService) {}
 

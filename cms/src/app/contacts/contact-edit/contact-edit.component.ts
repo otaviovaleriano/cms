@@ -27,42 +27,26 @@ export class ContactEditComponent {
   }
 
 
-  ngOnInit() {
-    this.route.params.subscribe(
-      (params: Params) => {
-        const id = params['id']
-        if (id == null) {
-          this.editMode = false
-          return
-        }
-        this.originalContact = this.contactService.getContact(id)
-        if (this.originalContact == null)
-          return
+  ngOnInit(): void {
+    this.route.params.subscribe((params: Params) => {
+      this.id = params['id'];
 
-        this.editMode = true
-        this.contact = JSON.parse(JSON.stringify(this.originalContact))
+      if (!this.id) {
+        this.editMode = false;
+        return;
+      }
 
-        if (this.contact.group != undefined)
-          this.groupContacts = JSON.parse(JSON.stringify(this.contact.group))
+      this.originalContact = this.contactService.getContact(this.id);
 
-      })
+      if (!this.originalContact) {
+        return;
+      }
+
+      this.editMode = true;
+      this.contact = JSON.parse(JSON.stringify(this.originalContact));
+    });
   }
 
-  // addToGroup($event: CdkDragDrop<Contact>) {
-  //   const selectedContact: Contact = $event.item.data;
-  //   const invalidGroupContact = this.isInvalidContact(selectedContact);
-
-  //   if (invalidGroupContact)
-  //   {
-  //     this.invalidContact = true;
-  //     return
-  //   }
-
-  //   this.invalidContact = false;
-  //   this.groupContacts.push(selectedContact);
-  //   console.log(this.groupContacts);
-
-  // }
 
   onRemoveItem(index: number) {
     if (index < 0 || index >= this.groupContacts.length) {
@@ -71,20 +55,6 @@ export class ContactEditComponent {
     this.groupContacts.splice(index, 1);
   }
 
-  // isInvalidContact(newContact: Contact) {
-  //   if (!newContact) {
-  //     return true;
-  //   }
-  //   if (this.contact && newContact.id === this.contact.id) {
-  //     return true;
-  //   }
-  //   for (let i = 0; i < this.groupContacts.length; i++) {
-  //     if (newContact.id === this.groupContacts[i].id) {
-  //       return true;
-  //     }
-  //   }
-  //   return false;
-  // }
 
   onSubmit(f: NgForm) {
     const name = f.value.name;

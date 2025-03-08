@@ -11,7 +11,6 @@ import { Contact } from '../contact.module';
 export class ContactItemComponent {
 
  @Input() contact: Contact;
- @Input() index: string;
 
  ngOnInit(): void {}
 

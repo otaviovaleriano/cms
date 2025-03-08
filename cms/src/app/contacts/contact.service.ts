@@ -1,8 +1,12 @@
 import { Subject } from 'rxjs';
 import { Contact } from './contact.module';
 import { MOCKCONTACTS } from './MOCKCONTACTS';
-import { EventEmitter } from '@angular/core';
+import { EventEmitter, Injectable } from '@angular/core';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 
+@Injectable({
+    providedIn: 'root'
+  })
 export class ContactService {
 
     maxContactId: number;
@@ -15,14 +19,42 @@ export class ContactService {
 
     // contactChangedEvent = new EventEmitter<Contact[]>();
 
-    constructor() {
-        this.maxContactId = this.getMaxId();
-        this.contacts = MOCKCONTACTS;
+    private firebase = 'https://cms-project-6909a-default-rtdb.firebaseio.com/contacts.json';
+
+    constructor(private http: HttpClient) {
+        this.getContacts();
     }
 
-    getContacts(): Contact[] {        
-        return this.contacts.slice();
-    }
+    getContacts() {
+        this.http.get<Contact[]>(this.firebase)
+        .subscribe(
+          (contacts: Contact[]) => {
+            this.contacts = contacts ? contacts : [];
+            this.maxContactId = this.getMaxId();
+
+            this.contactListChangedEvent.next(this.contacts.slice());
+          },
+          (error) => {
+            console.error('Error fetching contacts:', error);
+          }
+        );
+      }
+
+    storeContacts() {
+        const contactsJSON = JSON.stringify(this.contacts);
+        const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+    
+        this.http.put(this.firebase, contactsJSON, { headers })
+        .subscribe(
+          () => {
+            this.contactListChangedEvent.next(this.contacts.slice());
+          },
+          (error) => {
+            console.error('Error storing contacts:', error);
+          }
+        );
+      }
+    
 
     getContact(id: string): Contact {
         for (let contact of this.contacts) {
@@ -42,8 +74,7 @@ export class ContactService {
             return;
         }
         this.contacts.splice(pos, 1); 
-        const contactsListClone = this.contacts.slice(); 
-        this.contactListChangedEvent.next(contactsListClone); 
+        this.storeContacts();
     }
 
     getMaxId(): number {
@@ -66,8 +97,7 @@ export class ContactService {
         newContact.id = nextId.toString();
 
         this.contacts.push(newContact);
-        const contactsListClone = this.contacts.slice();
-        this.contactListChangedEvent.next(contactsListClone);
+        this.storeContacts();
 
     }
 
@@ -83,8 +113,7 @@ export class ContactService {
 
         newContact.id = originalContact.id;
         this.contacts[pos] = newContact;
-        const contactsListClone = this.contacts.slice();
-        this.contactListChangedEvent.next(contactsListClone);
+        this.storeContacts();
     }
 
 

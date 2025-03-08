@@ -13,23 +13,23 @@ export class MessageEditComponent {
 
   constructor(private messageService: MessageService) {}
 
-  currentSender: string = 'Otavio Silva';
+  currentSender: string = '3';
 
 @ViewChild('subject', {static: true}) subject: ElementRef;
 @ViewChild('msgText', {static: true}) msgText: ElementRef;
 @Output() addMessageEvent = new EventEmitter<Message>();
 
-onSendMessage() {
-  const subjectValue = this.subject.nativeElement.value;
-  const msgTextValue = this.msgText.nativeElement.value;
-  const newMessage = new Message(null,null, null, null);
-  newMessage.id = '1'; 
-  newMessage.sender = this.currentSender;
-  newMessage.subject = subjectValue;
-  newMessage.msgText = msgTextValue;
-  this.addMessageEvent.emit(newMessage); 
+onSendMessage(): void{
+  const subject = this.subject.nativeElement.value;
+  const msgText = this.msgText.nativeElement.value;
+
+  const newMessage = new Message
+  (
+    '3', subject, msgText, this.currentSender
+  );
+  
   this.messageService.addMessage(newMessage);
-  console.log('New message:', newMessage);
+  this.onClear();
 }
 
 onClear() {
