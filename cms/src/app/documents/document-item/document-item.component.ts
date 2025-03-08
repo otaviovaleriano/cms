@@ -13,7 +13,7 @@ export class DocumentItemComponent {
 
   @Input() document!: Document;
 
-  @Input() index!: string;
+  // @Input() index!: string;
 
 
 }

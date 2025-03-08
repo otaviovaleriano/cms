@@ -23,6 +23,8 @@ import { AppRoutingModule } from './app-routing.module';
 import { DocumentEditComponent } from './documents/document-edit/document-edit.component';
 import { ContactEditComponent } from './contacts/contact-edit/contact-edit.component';
 import { DragDropModule } from '@angular/cdk/drag-drop';
+import { HttpClientModule } from '@angular/common/http';
+import { ContactsFilterPipe } from './contacts/contacts-filter.pipe';
 
 @NgModule({
   declarations: [
@@ -40,14 +42,19 @@ import { DragDropModule } from '@angular/cdk/drag-drop';
     MessageEditComponent,
     MessageListComponent,
     DocumentEditComponent,
-    ContactEditComponent    
+    ContactEditComponent,
+    ContactsFilterPipe  
   ],
   imports: [
     BrowserModule,
     FormsModule,
     DropdownDirective,
     AppRoutingModule,
-    DragDropModule
+    DragDropModule,
+    HttpClientModule,
+    DragDropModule,
+
+      
   ],
   providers: [ContactService, DocumentService, MessageService],
   bootstrap: [AppComponent]

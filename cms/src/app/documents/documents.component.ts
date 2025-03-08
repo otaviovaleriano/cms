@@ -11,10 +11,15 @@ import { Document } from './document.model';
   styleUrl: './documents.component.css'
 })
 export class DocumentsComponent {
+  selectedDocument: Document | null = null;
 
-  constructor() {}  
+  constructor(private documentService: DocumentService) {}  
 
-  ngOnInit() {
+  ngOnInit(): void {
+    this.documentService.documentSelectedEvent.subscribe(
+      (document: Document) => {
+        this.selectedDocument = document;
+      }
+    )
   }
-
 }

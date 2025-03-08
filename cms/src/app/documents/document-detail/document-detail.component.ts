@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Document } from '../document.model';
 import { DocumentService } from '../document.service';
 import { Router, ActivatedRoute, Params } from '@angular/router';
@@ -12,7 +12,7 @@ import { WindRefService } from '../../wind-ref.service';
   templateUrl: './document-detail.component.html',
   styleUrl: './document-detail.component.css'
 })
-export class DocumentDetailComponent {
+export class DocumentDetailComponent implements OnInit {
 
 nativeWindow: any;
   
@@ -42,7 +42,7 @@ document: Document;
   }
 
   onView() {
-    if(this.document.url) {
+    if(this.document?.url) {
       this.nativeWindow.open(this.document.url);
     }
   }
