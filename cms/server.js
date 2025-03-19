@@ -5,6 +5,7 @@ var http = require('http');
 var bodyParser = require('body-parser');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
+var mongoose = require('mongoose');
 
 // import the routing file to handle the default (index) route
 var index = require('./server/routes/app');
@@ -67,3 +68,20 @@ const server = http.createServer(app);
 server.listen(port, function() {
   console.log('API running on localhost: ' + port)
 });
+
+
+// establish a connection to the mongo database
+async function connectDB() {
+  try {
+    await mongoose.connect('mongodb://localhost:27017/cms', {
+      useNewUrlParser: true,
+      useUnifiedTopology: true
+    });
+    console.log('✅ Connected to database!');
+  } catch (err) {
+    console.error('❌ Connection failed:', err);
+    process.exit(1);
+  }
+}
+
+connectDB();
