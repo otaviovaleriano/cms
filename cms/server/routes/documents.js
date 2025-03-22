@@ -1,6 +1,6 @@
 
 const SequenceGenerator = require('./sequenceGenerator');
-const sequenceGenerator = new SequenceGenerator("documents"); // ✅ Create an instance
+const sequenceGenerator = new SequenceGenerator("documents");
 const Document = require('../models/document');
 
 var express = require('express');
@@ -23,7 +23,7 @@ router.get('/', (req, res, next) => {
 
 router.post('/', async (req, res, next) => {
     try {
-        const maxDocumentId = await sequenceGenerator.nextId(); // ✅ Use instance method
+        const maxDocumentId = await sequenceGenerator.nextId();
 
         const document = new Document({
             id: maxDocumentId,
@@ -38,7 +38,7 @@ router.post('/', async (req, res, next) => {
             document: createdDocument
         });
     } catch (error) {
-        console.error("❌ Error in POST /documents:", error);
+        console.error("Error in POST /documents:", error);
         res.status(500).json({
             message: 'An error occurred',
             error: error
